@@ -13,30 +13,36 @@
             "models": [
                 {
                     "id": "google/gemma-3-4b",
-                    "name": "LM Studio: Gemma 3 4B"
+                    "name": "LM Studio: Gemma 3 4B",
+                    "contextWindow": 131072
                 },
                 {
                     "id": "deepseek/deepseek-r1-0528-qwen3-8b",
                     "name": "LM Studio: Deepseek R1 0528 Qwen3 8B",
-                    "reasoning": true
+                    "reasoning": true,
+                    "contextWindow": 131072
                 },
                 {
                     "id": "google/gemma-3-12b",
-                    "name": "LM Studio: Gemma 3 12B"
+                    "name": "LM Studio: Gemma 3 12B",
+                    "contextWindow": 131072
                 },
                 {
                     "id": "qwen/qwen3-14b",
                     "name": "LM Studio: Qwen3 14B",
-                    "reasoning": true
+                    "reasoning": true,
+                    "contextWindow": 40960
                 },
                 {
                     "id": "openai/gpt-oss-20b",
                     "name": "LM Studio: GPT OSS 20B",
-                    "reasoning": true
+                    "reasoning": true,
+                    "contextWindow": 131072
                 },
                 {
                     "id": "mistralai/devstral-small-2-2512",
-                    "name": "LM Studio: Devstral Small 2 2512"
+                    "name": "LM Studio: Devstral Small 2 2512",
+                    "contextWindow": 393216
                 }
             ]
         }
