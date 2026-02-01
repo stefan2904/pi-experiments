@@ -1,0 +1,5 @@
+# pi-experiments
+
+> :warning: This repo is not safe.
+
+Repo to play with [[https://github.com/badlogic/pi-mono][pi]] and [[https://github.com/mariozechner/pi-coding-agent][pi-coding-agent]].
