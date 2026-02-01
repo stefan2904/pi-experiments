@@ -1,7 +1,11 @@
-FROM node:25-bookworm-slim
+FROM node:current-trixie-slim
 
 # Create user (Debian syntax)
 RUN groupadd -r pi && useradd -r -g pi -m -d /home/pi pi
+
+# Install stuff
+RUN apt-get update && apt-get install -y zsh git python3 wget && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install pi coding agent (as root)
 RUN npm install -g @mariozechner/pi-coding-agent && \
@@ -13,6 +17,7 @@ ENV HOME=/home/pi
 
 # Switch to non-root user
 USER pi
+RUN wget -O /home/pi/.zshrc https://grml.org/console/zshrc && wget -O /home/pi/.zshrc.local https://grml.org/console/zshrc.local
 
 # Entrypoint: pass args through to pi
 ENTRYPOINT ["pi"]

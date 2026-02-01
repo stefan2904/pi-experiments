@@ -1,8 +1,8 @@
 # Build stage
-FROM node:25-bookworm AS builder
+FROM node:current-trixie-slim AS builder
 
 # Install build dependencies
-RUN apt-get update && apt-get install -y git python3 make g++ && \
+RUN apt-get update && apt-get install -y zsh git python3 make g++ && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /src
@@ -23,7 +23,11 @@ RUN cd packages/coding-agent && npm run build
 RUN cd packages/coding-agent && npm pack && mv mariozechner-pi-coding-agent-*.tgz /pi-coding-agent.tgz
 
 # Final stage
-FROM node:25-bookworm-slim
+FROM node:current-trixie-slim
+
+# Install stuff
+RUN apt-get update && apt-get install -y zsh git python3 wget && \
+    rm -rf /var/lib/apt/lists/*
 
 # Create user
 RUN groupadd -r pi && useradd -r -g pi -m -d /home/pi pi
@@ -39,6 +43,7 @@ ENV HOME=/home/pi
 
 # Switch to non-root user
 USER pi
+RUN wget -O /home/pi/.zshrc https://grml.org/console/zshrc && wget -O /home/pi/.zshrc.local https://grml.org/console/zshrc.local
 
 # Entrypoint: pass args through to pi
 ENTRYPOINT ["pi"]

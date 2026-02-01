@@ -4,5 +4,6 @@
   "defaultProvider": "lmstudio",
   "defaultModel": "openai/gpt-oss-20b",
   "defaultThinkingLevel": "off",
-  "hideThinkingBlock": false
+  "hideThinkingBlock": false,
+  "shellCommandPrefix": "shopt -s expand_aliases\neval \"$(grep '^alias ' ~/.zshrc)\""
 }
