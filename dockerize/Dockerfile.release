@@ -4,7 +4,7 @@ FROM node:current-trixie-slim
 RUN groupadd -r pi && useradd -r -g pi -m -d /home/pi pi
 
 # Install stuff
-RUN apt-get update && apt-get install -y zsh git python3 wget && \
+RUN apt-get update && apt-get install -y zsh git python3 wget curl jq && \
     rm -rf /var/lib/apt/lists/*
 
 # Install pi coding agent (as root)
