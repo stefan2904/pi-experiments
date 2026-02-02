@@ -32,7 +32,19 @@ fi
 # --update flag
 if [[ "$1" == "--update" ]]; then
     cd "$SCRIPT_DIR"
-    ./build.sh
+    CURRENT_VERSION=$(docker run --rm pi-coding-agent --version)
+    LATEST_VERSION=$(curl -s https://registry.npmjs.org/@mariozechner/pi-coding-agent/latest | jq -r .version)
+    if [ "$CURRENT_VERSION" == "$LATEST_VERSION" ]; then
+        echo "Already up to date. Rebuilding anyway ..."
+    else
+        echo "Updating pi to version $LATEST_VERSION ..."
+    fi
+    ./build.sh "$LATEST_VERSION"
+    UPDATED_VERSION=$(docker run --rm pi-coding-agent --version)
+    echo "Updated to pi version: $UPDATED_VERSION"
+    if [ "$CURRENT_VERSION" == "$UPDATED_VERSION" ]; then
+        echo " Version did not change!"
+    fi
     exit 0
 fi
 

@@ -13,7 +13,8 @@ RUN apt-get update && apt-get install -y zsh git python3 wget curl jq && \
     rm -rf /var/lib/apt/lists/*
 
 # Install pi coding agent (as root)
-RUN npm install -g @mariozechner/pi-coding-agent@latest && \
+ARG VERSION=latest
+RUN npm install -g @mariozechner/pi-coding-agent@$VERSION && \
     npm cache clean --force
 
 # Set up workspace
