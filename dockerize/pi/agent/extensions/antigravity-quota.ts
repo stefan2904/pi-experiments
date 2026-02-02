@@ -7,7 +7,7 @@ import * as os from "node:os";
 const AUTH_PATH = path.join(os.homedir(), ".pi", "agent", "auth.json");
 const BASE_URL = "https://cloudcode-pa.googleapis.com";
 
-async function fetchQuota() {
+interface QuotaInfo {
   remainingFraction?: number;
   resetTime?: string;
   isExhausted?: boolean;
@@ -116,9 +116,9 @@ export default function (pi: ExtensionAPI) {
             }
 
             if (modelsData.models) {
-              lines.push("");
-              lines.push(theme.fg("accent", theme.bold("Model Quotas:")));
-              lines.push(theme.fg("border", "-------------"));
+              //lines.push("");
+              //lines.push(theme.fg("accent", theme.bold("Model Quotas:")));
+              //lines.push(theme.fg("border", "-------------"));
 
               const recommendedIds = new Set(
                 modelsData.agentModelSorts?.[0]?.groups?.flatMap((g) => g.modelIds || []) || []
@@ -146,9 +146,9 @@ export default function (pi: ExtensionAPI) {
                 const resetDate = info.quotaInfo!.resetTime ? new Date(info.quotaInfo!.resetTime) : null;
                 let resetStr = "Unknown";
                 if (resetDate) {
-                  const timeStr = resetDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+                  const timeStr = resetDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: false });
                   const isToday = resetDate.toDateString() === new Date().toDateString();
-                  resetStr = isToday ? timeStr : `${resetDate.getMonth() + 1}/${resetDate.getDate()} ${timeStr}`;
+                  resetStr = isToday ? timeStr : `${resetDate.getDate()}.${resetDate.getMonth() + 1} ${timeStr}`;
                 }
 
                 const isExhausted = info.quotaInfo!.isExhausted;
@@ -159,7 +159,8 @@ export default function (pi: ExtensionAPI) {
                   color = "warning";
                 }
 
-                const idStr = id.length > 20 ? id.substring(0, 17) + "..." : id.padEnd(20);
+                const lenLongst = Math.max(...relevantModels.map(([id]) => id.length));
+                const idStr = id.padEnd(lenLongst); //id.length > 20 ? id.substring(0, 17) + "..." : id.padEnd(20);
                 lines.push(
                   `${theme.fg("dim", idStr)}: ${theme.fg(color, remaining.padStart(6))} rem, reset: ${theme.fg(
                     "dim",
