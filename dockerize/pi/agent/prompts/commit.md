@@ -12,7 +12,7 @@ Follow these steps:
     - Keep the summary short (<= 72 chars) and imperative.
     - Use `feat`, `fix`, `docs`, `refactor`, `chore`, `test`, or `perf` as the type.
     - Provide a short body if more context is needed.
-4. Only commit changes you actually made. Ignore other changes.
+4. Only commit changes you actually made. Ignore other changes (e.g. if files like settings.json were modified automatically or by other processes and not by your explicit actions).
 5. Do NOT push.
 
 Additional instructions: $ARGUMENTS
