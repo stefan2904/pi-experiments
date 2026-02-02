@@ -3,6 +3,8 @@
 # location of this script
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+touch "$SCRIPT_DIR/.env" # if user did not create it based on .env.template
+
 # --install flag
 if [[ "$1" == "--install" ]]; then
     ZSHRC="$HOME/.zshrc.local"
