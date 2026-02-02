@@ -47,9 +47,14 @@ if [ -n "$DEBUGFLAGS" ]; then
     echo "INFO: docker run flags: $DEBUGFLAGS"
 fi
 
+# Canonicalize PWD for session directory naming to avoid everything being in --workspace--
+# Matches logic in session-manager.js: cwd.replace(/^[/\\]/, "").replace(/[/\\:]/g, "-")
+CWD_SAFE=$(echo "$PWD" | sed 's|^[/\\]||' | sed 's|[/\\:]|-|g')
+SESSION_DIR="/home/pi/.pi/agent/sessions/--${CWD_SAFE}--"
+
 docker run --rm -it \
   -v "$PWD":/workspace:rw \
   -v "$SCRIPT_DIR/pi":/home/pi/.pi:rw \
   -w /workspace \
   --env-file "$SCRIPT_DIR/.env" $DEBUGFLAGS \
-  pi-coding-agent "${@}"
+  pi-coding-agent --session-dir "$SESSION_DIR" "${@}"
