@@ -37,11 +37,19 @@ if [[ "$1" == "--update" ]]; then
 fi
 
 
-echo "Using env file: $SCRIPT_DIR/.env"
+DEBUGFLAGS=""
+#DEBUGFLAGS="--entrypoint zsh"
+# test volumes: ./pi.sh -c 'touch ~/.pi/test'
+
+
+echo "INFO: Using env file: $SCRIPT_DIR/.env"
+if [ -n "$DEBUGFLAGS" ]; then
+    echo "INFO: docker run flags: $DEBUGFLAGS"
+fi
 
 docker run --rm -it \
-  -v "$PWD":/workspace \
-  -v "$SCRIPT_DIR/pi":/home/pi/.pi \
+  -v "$PWD":/workspace:rw \
+  -v "$SCRIPT_DIR/pi":/home/pi/.pi:rw \
   -w /workspace \
-  --env-file "$SCRIPT_DIR/.env" \
+  --env-file "$SCRIPT_DIR/.env" $DEBUGFLAGS \
   pi-coding-agent "${@}"
