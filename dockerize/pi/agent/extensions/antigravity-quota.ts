@@ -104,6 +104,14 @@ export default function (pi: ExtensionAPI) {
         ctx.ui.notify("Fetching Antigravity quota...", "info");
         const { loadData, modelsData } = await fetchQuota();
 
+        // log loadData and modelsData to file in .pi/agent/sessions/logs
+        const logDir = path.join(os.homedir(), ".pi", "agent", "sessions", "logs");
+        if (!fs.existsSync(logDir)) {
+          fs.mkdirSync(logDir, { recursive: true });
+        }
+        fs.writeFileSync(path.join(logDir, "loadData.json"), JSON.stringify(loadData, null, 2));
+        fs.writeFileSync(path.join(logDir, "modelsData.json"), JSON.stringify(modelsData, null, 2));
+
         ctx.ui.setWidget(
           "antigravity-quota",
           (_tui, theme) => {
