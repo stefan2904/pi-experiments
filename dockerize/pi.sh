@@ -49,6 +49,20 @@ if [[ "$1" == "--update" ]]; then
     exit 0
 fi
 
+# --sessions flag
+if [[ "$1" == "--sessions" ]]; then
+    SESSIONS_DIR="$SCRIPT_DIR/pi/agent/sessions"
+    if [ ! -d "$SESSIONS_DIR" ]; then
+        echo "No sessions found at $SESSIONS_DIR"
+        exit 0
+    fi
+    find "$SESSIONS_DIR" -maxdepth 1 -mindepth 1 -type d | sort | while read -r dir; do
+        count=$(find "$dir" -maxdepth 1 -mindepth 1 | wc -l)
+        echo "$(basename "$dir"): $count sessions"
+    done
+    exit 0
+fi
+
 
 DEBUGFLAGS=""
 #DEBUGFLAGS="--entrypoint zsh"
