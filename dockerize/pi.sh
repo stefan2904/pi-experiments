@@ -131,5 +131,7 @@ docker run --rm -it \
   -v "$PROJECT_ROOT":/workspace:rw \
   -v "$SCRIPT_DIR/pi":/home/pi/.pi:rw \
   -w "/workspace/$REL_PATH" \
+  -e PI_PROJECT_ROOT="$PROJECT_ROOT" \
+  -e PI_HOST_HOSTNAME="$(hostname)" \
   --env-file "$SCRIPT_DIR/.env" $DEBUGFLAGS \
   pi-coding-agent $TOOLS $SESSION_DIR_CMD "${@}"
