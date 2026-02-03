@@ -5,12 +5,12 @@ export default function (pi: ExtensionAPI) {
     const root = process.env.PI_PROJECT_ROOT;
     const hostname = process.env.PI_HOST_HOSTNAME;
     let status = "";
-    if (hostname) status += `${hostname}:`;
     if (root) status += root;
+    if (hostname) status += ` @ ${hostname}`;
 
     if (status) {
       // Use muted color to blend in with the footer
-      ui.setStatus("project-info", ui.theme.fg("muted", ` [${status}]`));
+      ui.setStatus("dockerized-project-info", ui.theme.fg("muted", `[${status}]`));
     }
   };
 
