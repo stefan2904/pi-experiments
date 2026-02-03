@@ -26,6 +26,16 @@
     "google-antigravity/claude-opus-4-5-thinking"
   ],
   "packages": [
-    "git:github.com/mitsuhiko/agent-stuff"
+    {
+      "source": "git:github.com/mitsuhiko/agent-stuff",
+      "extensions": [
+        "-pi-extensions/files.ts",
+        "-pi-extensions/loop.ts"
+      ],
+      "skills": [
+        "-skills/web-browser/SKILL.md",
+        "-skills/openscad/SKILL.md"
+      ]
+    }
   ]
 }
