@@ -17,12 +17,16 @@ The following environment variables can be configured in =dockerize/.env= (see =
 - =BOT_GIT_NAME=: Git user name (for changes done in the container/by pi).
 - =BOT_GIT_EMAIL=: Git user email (for changes done in the container/by pi).
 
+**** Pi Commands
+- =pi=: Run the agent in the current directory (requires =--install=).
+- =pic=: Continue the last session.
+- =picommit=: Automatically stage and commit changes using the =/commit= template.
+- =./pi.sh --sessions=: List session summaries (number of sessions per project).
+
 **** Helper Commands
 - =./build.sh=: Build the docker image (optionally pass a version like =./build.sh 1.0.0=).
-- =./pi.sh=: Run the agent in the current directory.
-- =./pi.sh --install=: Install =pi=, =pic= (continue), and =picommit= (automatic commit) aliases in =~/.zshrc.local=.
+- =./pi.sh --install=: Install =pi=, =pic=, and =picommit= aliases in =~/.zshrc.local=.
 - =./pi.sh --update=: Update the agent to the latest version and rebuild the docker image.
-- =./pi.sh --sessions=: List session summaries (number of sessions per project).
 
 **** Prompt Templates
 - =/commit=: Automatically stage and commit changes with conventional commit messages.
@@ -31,6 +35,9 @@ The following environment variables can be configured in =dockerize/.env= (see =
 - =/quota-antigravity=: Show Antigravity usage limits and quotas.
 - =/quota-copilot=: Show GitHub Copilot usage statistics and quotas.
 - =/files-changed=: Show a list of files read, written, or edited in the current session.
+
+**** Skills
+- =git-autopep8=: Automatically formats changed lines in Python files using =git= and =autopep8=.
 
 **** Tools (Custom)
 - =get_antigravity_quota=: Fetch Antigravity usage limits (available to the model).
