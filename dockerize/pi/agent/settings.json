@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.51.1",
+  "lastChangelogVersion": "0.51.3",
   "theme": "light",
   "defaultProvider": "github-copilot",
   "defaultModel": "gemini-3-flash-preview",
