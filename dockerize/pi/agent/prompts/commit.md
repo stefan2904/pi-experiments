@@ -10,3 +10,7 @@ Follow /skill:commit to commit changes with these strict constraints:
 - Do **NOT** push.
 
 Additional instructions: $ARGUMENTS
+
+Handling for custom parameters in $ARGUMENTS:
+- If `--force` is present, ignore the restriction to only commit changes made by you in this session and commit all changes.
+- If `--user <name>` and `--email <email>` are present, perform the git commit with these values as the author (e.g., `git commit --author="Name <email>"`).

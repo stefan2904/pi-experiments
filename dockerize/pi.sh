@@ -31,6 +31,13 @@ if [[ "$1" == "--install" ]]; then
         echo "Installing 'pic' alias in $ZSHRC..."
         printf "alias pic='%s/pi.sh --continue' # pi-coding-agent alias\n" "$SCRIPT_DIR" >> "$ZSHRC"
     fi
+
+    if grep -q "alias picommit=" "$ZSHRC" || grep -q "alias picommit =" "$ZSHRC"; then
+        echo "Alias 'picommit' already exists in $ZSHRC"
+    else
+        echo "Installing 'picommit' alias in $ZSHRC..."
+        printf "alias picommit=\"%s/pi.sh '/commit --force --user \\\"\$(git config user.name)\\\" --email \\\"\$(git config user.email)\\\"'\" # pi-coding-agent alias\n" "$SCRIPT_DIR" >> "$ZSHRC"
+    fi
     echo "Successfully installed aliases. Please run 'source ~/.zshrc' or restart your terminal."
     exit 0
 fi
