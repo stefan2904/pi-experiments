@@ -127,7 +127,13 @@ if [ -n "$REL_PATH" ]; then
 fi
 echo "_____________________________________________"
 
-docker run --rm -it \
+# Determine if we are in an interactive terminal
+INTERACTIVE_FLAGS="-it"
+if [ ! -t 0 ]; then
+    INTERACTIVE_FLAGS=""
+fi
+
+docker run --rm $INTERACTIVE_FLAGS \
   -v "$PROJECT_ROOT":/workspace:rw \
   -v "$SCRIPT_DIR/pi":/home/pi/.pi:rw \
   -w "/workspace/$REL_PATH" \
