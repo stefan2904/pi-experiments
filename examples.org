@@ -1,4 +1,11 @@
 ** Examples
 
 *** [[https://github.com/bot2904/graz-transit][graz-transit]]
-Graz public transport departure times and route planning.
+A demo showing Graz public transport departure times and route planning.
+
+*** [[https://github.com/bot2904/org-vs-orgdown-demo][org-vs-orgdown-demo]]
+A demonstration comparing Markdown and Orgdown syntax.
+
+** About the bot2904 Account
+The [[https://github.com/bot2904][bot2904]] account is a dedicated bot account used by [[https://github.com/stefan2904][stefan2904]]'s pi agent.
+It exists to perform automated tasks, experiment with GitHub APIs, and manage projects in a sandbox environment, effectively "testing its limits" without cluttering (or risking) the main account.
