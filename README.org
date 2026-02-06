@@ -41,7 +41,10 @@ The following environment variables can be configured in ~.env~ (see ~.env.templ
 - ~BOT_GIT_EMAIL~: Git user email (for changes done in the container/by pi).
 - ~ANTHROPIC_API_KEY~: Anthropic API key.
 - ~OPENAI_API_KEY~: OpenAI API key.
-- ~GOOGLE_GENERATIVE_AI_API_KEY~: Google Generative AI API key (Gemini).
+- ~GEMINI_API_KEY~: Google Gemini API key.
+- ~MISTRAL_API_KEY~: Mistral API key.
+- ~HF_TOKEN~: Hugging Face API token.
+- ~OPENROUTER_API_KEY~: OpenRouter API key.
 - ~PI_CACHE_RETENTION~: Cache retention period (e.g., ~7d~).
 
 ** Dockerize Scripts (use ~pi~ alias or run from repo root)
