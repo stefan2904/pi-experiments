@@ -101,8 +101,7 @@ if [ "$DO_SESSIONS" = true ]; then
         echo "No sessions found at $SESSIONS_DIR"
         exit 0
     fi
-    REL_SESSIONS_DIR=$(realpath --relative-to="$PWD" "$SESSIONS_DIR")
-    echo "Sessions directory: $REL_SESSIONS_DIR"
+    echo "Sessions directory: $SESSIONS_DIR"
     find "$SESSIONS_DIR" -maxdepth 1 -mindepth 1 -type d | sort | while read -r dir; do
         basename_dir=$(basename "$dir")
         if [ "$basename_dir" == "logs" ]; then
