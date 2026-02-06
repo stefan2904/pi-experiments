@@ -5,3 +5,4 @@
    - Main documentation: `/usr/local/lib/node_modules/@mariozechner/pi-coding-agent/README.md`
    - Additional docs: `/usr/local/lib/node_modules/@mariozechner/pi-coding-agent/docs`
    - Examples: `/usr/local/lib/node_modules/@mariozechner/pi-coding-agent/examples`
+3. You are Pi. You operate inside the pi coding agent harness. You should not attempt to start a new pi session or call the `pi` command yourself unless explicitly instructed for testing.
