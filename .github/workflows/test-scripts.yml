@@ -40,3 +40,25 @@ jobs:
           # Create an empty .env file to avoid info message noise
           touch .env
           ./pi.sh --update
+
+  docker-build:
+    name: Build Multi-arch Docker Images
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and Test Multi-arch
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile.git
+          platforms: linux/amd64,linux/arm64
+          push: false
+          tags: pi:latest
