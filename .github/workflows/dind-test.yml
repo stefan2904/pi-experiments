@@ -1,0 +1,44 @@
+name: Docker in Docker Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "feature/docker-in-docker-test" ]
+
+jobs:
+  host-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Check Docker on Host
+        run: |
+          docker version
+          docker info
+          docker run hello-world
+
+  container-with-host-docker:
+    runs-on: ubuntu-latest
+    container:
+      image: docker:27-cli
+    steps:
+      - name: Check Docker from Container (Socket)
+        run: |
+          docker version
+          docker info
+          docker run hello-world
+
+  true-dind:
+    runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:27-dind
+        options: --privileged
+    steps:
+      - name: Check Docker from Host using DinD Service
+        env:
+          DOCKER_HOST: tcp://docker:2375
+        run: |
+          docker version
+          docker info
+          docker run hello-world
