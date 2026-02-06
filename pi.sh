@@ -33,11 +33,6 @@ while [[ $# -gt 0 ]]; do
             DO_SESSIONS=true
             shift
             ;;
-        -r|--resume)
-            # Shortcut for --continue
-            NEW_ARGS+=("--continue")
-            shift
-            ;;
         *)
             NEW_ARGS+=("$1")
             shift
