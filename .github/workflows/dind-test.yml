@@ -28,16 +28,22 @@ jobs:
           docker info
           docker run hello-world
 
-  true-dind:
-    runs-on: ubuntu-latest
-    services:
-      docker:
-        image: docker:27-dind
-        options: --privileged
+  build-macos:
+    name: Build Docker on macOS (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-13, macos-14] # 13 is Intel, 14 is Apple Silicon
     steps:
-      - name: Check Docker from Host using DinD Service
-        env:
-          DOCKER_HOST: tcp://docker:2375
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker
+        run: |
+          brew install colima docker
+          colima start
+
+      - name: Verify Docker
         run: |
           docker version
           docker info
