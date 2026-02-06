@@ -21,6 +21,7 @@ interface QuotaSnapshot {
 }
 
 interface CopilotUserResponse {
+  login: string;
   copilot_plan: string;
   sku: string;
   access_type_sku?: string;
@@ -71,7 +72,8 @@ export default function (pi: ExtensionAPI) {
             const lines: string[] = [];
             lines.push(theme.fg("accent", theme.bold("GitHub Copilot Quotas:")));
             lines.push(theme.fg("border", "========================="));
-            lines.push(`Plan: ${theme.fg("success", data.copilot_plan)}`);
+            lines.push(`Account: ${theme.fg("success", data.login)}`);
+            lines.push(`Plan:    ${theme.fg("success", data.copilot_plan)}`);
             if (data.access_type_sku) {
               lines.push(`SKU:  ${theme.fg("success", data.access_type_sku)}`);
             }
