@@ -1,8 +1,8 @@
 {
   "lastChangelogVersion": "0.52.7",
   "theme": "light",
-  "defaultProvider": "github-copilot",
-  "defaultModel": "gemini-3-flash-preview",
+  "defaultProvider": "google-antigravity",
+  "defaultModel": "gemini-3-flash",
   "defaultThinkingLevel": "medium",
   "hideThinkingBlock": true,
   "shellPath": "/bin/zsh",
@@ -14,16 +14,20 @@
   "collapseChangelog": true,
   "enabledModels": [
     "google-antigravity/gemini-3-flash",
+    "google-gemini-cli/gemini-3-flash-preview",
     "github-copilot/gemini-3-flash-preview",
     "google-antigravity/gemini-3-pro-low",
     "google-antigravity/gemini-3-pro-high",
+    "google-gemini-cli/gemini-3-pro-preview",
     "github-copilot/gemini-3-pro-preview",
     "github-copilot/claude-haiku-4.5",
     "github-copilot/claude-sonnet-4.5",
     "google-antigravity/claude-sonnet-4-5",
     "google-antigravity/claude-sonnet-4-5-thinking",
     "github-copilot/claude-opus-4.5",
-    "google-antigravity/claude-opus-4-5-thinking"
+    "google-antigravity/claude-opus-4-5-thinking",
+    "github-copilot/claude-opus-4.6",
+    "openai-codex/gpt-5.3-codex"
   ],
   "packages": [
     {
