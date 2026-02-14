@@ -24,6 +24,7 @@ while [[ $# -gt 0 ]]; do
     case "$1" in
         --ro|--readonly)
             MOUNT_MODE="ro"
+            TOOLS="--tools read,grep,find,ls"
             shift
             ;;
         --install)
