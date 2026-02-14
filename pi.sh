@@ -78,7 +78,7 @@ if [ "$DO_INSTALL" = true ]; then
                 printf "alias pic='%s/pi.sh --continue' # pi-coding-agent alias\n" "$SCRIPT_DIR" >> "$SHELL_CONFIG"
                 ;;
             picommit)
-                printf "alias picommit=\"%s/pi.sh '/commit --force --user \\\"\$(git config user.name)\\\" --email \\\"\$(git config user.email)\\\"'\" # pi-coding-agent alias\n" "$SCRIPT_DIR" >> "$SHELL_CONFIG"
+                printf "alias picommit=\"%s/pi.sh -p '/commit --force --user \\\"\$(git config user.name)\\\" --email \\\"\$(git config user.email)\\\"'\" # pi-coding-agent alias\n" "$SCRIPT_DIR" >> "$SHELL_CONFIG"
                 ;;
         esac
     done
