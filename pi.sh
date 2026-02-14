@@ -10,6 +10,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 
 touch "$SCRIPT_DIR/.env" # if user did not create it based on .env.template
+source "$SCRIPT_DIR/.env"
 
 
 # Handle flags
@@ -53,7 +54,11 @@ set -- "${NEW_ARGS[@]}"
 
 # --commit flag
 if [ "$DO_COMMIT" = true ]; then
-    set -- -p "/commit --force --user \"$(git config user.name)\" --email \"$(git config user.email)\""
+    MODEL_ARG=""
+    if [ -n "$PI_FAST_MODEL" ]; then
+        MODEL_ARG="--provider \"$PI_FAST_PROVIDER\" --model \"$PI_FAST_MODEL\""
+    fi
+    set -- "/commit --force --user \"$(git config user.name)\" --email \"$(git config user.email)\" $MODEL_ARG"
 fi
 
 # --install flag
