@@ -49,59 +49,6 @@ const DEFAULT_COMPAT: KiloModelConfig["compat"] = {
 	supportsUsageInStreaming: false,
 };
 
-const FALLBACK_MODELS: KiloModelConfig[] = [
-	{
-		id: "kilo/auto",
-		name: "Kilo: Auto",
-		reasoning: true,
-		input: ["text", "image"],
-		cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
-		contextWindow: 200000,
-		maxTokens: 64000,
-		compat: DEFAULT_COMPAT,
-	},
-	{
-		id: "anthropic/claude-sonnet-4.5",
-		name: "Anthropic: Claude Sonnet 4.5",
-		reasoning: true,
-		input: ["text", "image"],
-		cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
-		contextWindow: 200000,
-		maxTokens: 64000,
-		compat: DEFAULT_COMPAT,
-	},
-	{
-		id: "openai/gpt-5.2-codex",
-		name: "OpenAI: GPT-5.2 Codex",
-		reasoning: true,
-		input: ["text", "image"],
-		cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
-		contextWindow: 400000,
-		maxTokens: 128000,
-		compat: DEFAULT_COMPAT,
-	},
-	{
-		id: "google/gemini-3-flash-preview",
-		name: "Google: Gemini 3 Flash Preview",
-		reasoning: true,
-		input: ["text", "image"],
-		cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
-		contextWindow: 1048576,
-		maxTokens: 65535,
-		compat: DEFAULT_COMPAT,
-	},
-	{
-		id: "minimax/minimax-m2.5:free",
-		name: "MiniMax: M2.5 (free)",
-		reasoning: true,
-		input: ["text"],
-		cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
-		contextWindow: 204800,
-		maxTokens: 131072,
-		compat: DEFAULT_COMPAT,
-	},
-];
-
 function asPositiveInt(value: unknown): number | undefined {
 	if (typeof value !== "number" || !Number.isFinite(value)) return undefined;
 	if (value <= 0) return undefined;
@@ -193,15 +140,7 @@ function registerKiloProvider(pi: ExtensionAPI, models: KiloModelConfig[]): void
 }
 
 export default async function (pi: ExtensionAPI) {
-	let models = FALLBACK_MODELS;
-
-	try {
-		models = await fetchKiloModels();
-	} catch (error) {
-		const message = error instanceof Error ? error.message : String(error);
-		console.warn(`[kilo-code-provider] model fetch failed, using fallback models: ${message}`);
-	}
-
+	const models = await fetchKiloModels();
 	registerKiloProvider(pi, models);
 
 	pi.registerCommand("kilo-refresh-models", {
