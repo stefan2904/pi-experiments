@@ -99,6 +99,8 @@ if [ "$DO_UPDATE" = true ]; then
         echo "Updating pi to version $LATEST_VERSION ..."
     fi
     ./build.sh "$LATEST_VERSION"
+    echo "Updating configured packages ..."
+    ./pi.sh update
     UPDATED_VERSION=$(docker run --rm pi-coding-agent --version)
     echo "Updated to pi version: $UPDATED_VERSION"
     if [ "$CURRENT_VERSION" == "$UPDATED_VERSION" ]; then
