@@ -8,6 +8,10 @@ TOOLS="--tools read,bash,edit,write,grep,find,ls"
 # location of this script
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+
+touch "$SCRIPT_DIR/.env" # if user did not create it based on .env.template
+
+
 # Handle flags
 MOUNT_MODE="rw"
 DO_INSTALL=false
@@ -50,8 +54,6 @@ set -- "${NEW_ARGS[@]}"
 if [ "$DO_COMMIT" = true ]; then
     set -- -p "/commit --force --user \"$(git config user.name)\" --email \"$(git config user.email)\""
 fi
-
-touch "$SCRIPT_DIR/.env" # if user did not create it based on .env.template
 
 # --install flag
 if [ "$DO_INSTALL" = true ]; then
