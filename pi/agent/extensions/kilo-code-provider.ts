@@ -36,6 +36,13 @@ interface KiloGatewayModel {
 	};
 	supported_parameters?: string[];
 	preferredIndex?: number;
+	pricing?: {
+		prompt?: string | number;
+		completion?: string | number;
+		cache_read?: string | number;
+		cache_write?: string | number;
+		[input: string]: string | number | undefined;
+	};
 }
 
 interface KiloGatewayModelsResponse {
@@ -98,6 +105,19 @@ function toModelConfig(model: KiloGatewayModel): KiloModelConfig | undefined {
 	};
 }
 
+function isFreeModel(model: KiloGatewayModel): boolean {
+	const pricing = model.pricing;
+	if (!pricing) return false;
+
+	// Check all pricing fields are 0
+	for (const value of Object.values(pricing)) {
+		if (value === undefined) continue;
+		const num = typeof value === "string" ? parseFloat(value) : value;
+		if (!Number.isFinite(num) || num !== 0) return false;
+	}
+	return true;
+}
+
 async function fetchKiloModels(): Promise<KiloModelConfig[]> {
 	const response = await fetch(KILO_MODELS_URL, {
 		headers: {
@@ -155,6 +175,67 @@ export default async function (pi: ExtensionAPI) {
 			} catch (error) {
 				const message = error instanceof Error ? error.message : String(error);
 				ctx.ui.notify(`Failed to refresh Kilo models: ${message}`, "error");
+			}
+		},
+	});
+
+	pi.registerCommand("kilo-list-free-models", {
+		description: "List all Kilo Code models that are currently free (all pricing fields are 0)",
+		handler: async (_args, ctx) => {
+			ctx.ui.notify("Fetching Kilo Code models...", "info");
+
+			try {
+				const response = await fetch(KILO_MODELS_URL, {
+					headers: { Accept: "application/json" },
+				});
+
+				if (!response.ok) {
+					throw new Error(`failed to fetch models (${response.status})`);
+				}
+
+				const payload = (await response.json()) as KiloGatewayModelsResponse;
+				const data = payload.data || [];
+
+				const freeModels = data.filter(isFreeModel);
+
+				if (freeModels.length === 0) {
+					ctx.ui.notify("No free models found", "info");
+					return;
+				}
+
+				// Sort by name for consistent output
+				freeModels.sort((a, b) =>
+					(a.name || a.id || "").localeCompare(b.name || b.id || "")
+				);
+
+				const lines: string[] = [];
+				lines.push(`Free Kilo Code models (${freeModels.length}):\n`);
+
+				// Calculate column widths
+				const names = freeModels.map(m => m.name || m.id || "unknown");
+				const ids = freeModels.map(m => m.id || "unknown");
+				const contexts = freeModels.map(m => String(m.context_length || m.top_provider?.context_length || "?"));
+
+				const nameWidth = Math.max(4, ...names.map(n => n.length));
+				const idWidth = Math.max(2, ...ids.map(i => i.length));
+				const ctxWidth = Math.max(7, ...contexts.map(c => c.length));
+
+				// Header
+				lines.push(`  ${"Name".padEnd(nameWidth)}  ${"ID".padEnd(idWidth)}  Context`);
+				lines.push(`  ${"-".repeat(nameWidth)}  ${"-".repeat(idWidth)}  ${"-".repeat(ctxWidth)}`);
+
+				// Rows
+				for (let i = 0; i < freeModels.length; i++) {
+					const name = names[i].padEnd(nameWidth);
+					const id = ids[i].padEnd(idWidth);
+					const ctx = contexts[i];
+					lines.push(`  ${name}  ${id}  ${ctx}`);
+				}
+
+				ctx.ui.notify(lines.join("\n"), "info");
+			} catch (error) {
+				const message = error instanceof Error ? error.message : String(error);
+				ctx.ui.notify(`Failed to list free models: ${message}`, "error");
 			}
 		},
 	});
