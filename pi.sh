@@ -13,6 +13,7 @@ MOUNT_MODE="rw"
 DO_INSTALL=false
 DO_UPDATE=false
 DO_SESSIONS=false
+DO_COMMIT=false
 NEW_ARGS=()
 
 while [[ $# -gt 0 ]]; do
@@ -33,6 +34,10 @@ while [[ $# -gt 0 ]]; do
             DO_SESSIONS=true
             shift
             ;;
+        --commit)
+            DO_COMMIT=true
+            shift
+            ;;
         *)
             NEW_ARGS+=("$1")
             shift
@@ -40,6 +45,11 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 set -- "${NEW_ARGS[@]}"
+
+# --commit flag
+if [ "$DO_COMMIT" = true ]; then
+    set -- -p "/commit --force --user \"$(git config user.name)\" --email \"$(git config user.email)\""
+fi
 
 touch "$SCRIPT_DIR/.env" # if user did not create it based on .env.template
 
@@ -78,7 +88,7 @@ if [ "$DO_INSTALL" = true ]; then
                 printf "alias pic='%s/pi.sh --continue' # pi-coding-agent alias\n" "$SCRIPT_DIR" >> "$SHELL_CONFIG"
                 ;;
             picommit)
-                printf "alias picommit=\"%s/pi.sh -p '/commit --force --user \\\"\$(git config user.name)\\\" --email \\\"\$(git config user.email)\\\"'\" # pi-coding-agent alias\n" "$SCRIPT_DIR" >> "$SHELL_CONFIG"
+                printf "alias picommit='%s/pi.sh --commit' # pi-coding-agent alias\n" "$SCRIPT_DIR" >> "$SHELL_CONFIG"
                 ;;
         esac
     done
